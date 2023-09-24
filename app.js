@@ -162,10 +162,60 @@ const trainSchedule = [
 ];
 
 const Cells = document.querySelectorAll(".cell");
+const SearchInput = document.querySelector("#search");
+const SearchButton = document.querySelector("#searchBtn");
+const SelectDays = document.querySelector("#days");
+const CountWords = document.querySelector(".searchCount");
 
-const test = () => {
+let SearcText = "";
+let SearchCount = 0;
+
+SearchInput.addEventListener("input", (event) => {
+  SearcText = event.target.value.toLowerCase();
+});
+
+function search(text) {
+  SearcText = SearcText.replace("<", "");
+  SearcText = SearcText.replace(">", "");
+  let result = text.replace(
+    new RegExp(words, "g"),
+    "<div style='color:Red; display:inline;'>" + words + "</div>"
+  );
+  document.getElementById("container").innerHTML = result;
+}
+
+SearchButton.addEventListener("click", (event) => {
+  SearchCount = 0;
+  test(false);
+  Cells.forEach((item) => {
+    const cellTitle = item.querySelector(".cell-title").textContent;
+    const itemText = item.innerHTML;
+    if (SelectDays.value.toLowerCase() === cellTitle.toLowerCase()) {
+      if (SearcText.length > 0) {
+        SearcText = SearcText.replace("<", "");
+        SearcText = SearcText.replace(">", "");
+        let result = itemText.replace(new RegExp(SearcText, "gi"), (match) => {
+          SearchCount++;
+          return `<div style='color:Red; display:inline;'>${match}</div>`;
+        });
+        item.innerHTML = result;
+      }
+    }
+  });
+  renderCount();
+});
+
+const renderCount = () => {
+  if (SearcText.length > 0)
+    if (SearchCount) {
+      CountWords.innerHTML = `<span>Количество повторений: ${SearchCount}</span>`;
+    } else CountWords.innerHTML = `<span>Ничего не найдено</span>`;
+};
+
+const test = (isStart = true) => {
   for (let i = 0; i < Cells.length; i++) {
-    const Train = `<div class="">
+    const trainInfo = `
+    <div class="trainInfo">
 <div class="info">
   <h3>Номер поезда: ${trainSchedule[i].trainNumber}</h3>
 </div>
@@ -182,10 +232,15 @@ const test = () => {
 <div class="info"><h3>${trainSchedule[i].travelTime}</h3></div>
 </div>
 `;
-    Cells[i].innerHTML += Train;
+    const StartTrain = `
+    <div class="info-block">${trainInfo}</div>
+`;
+    if (isStart) Cells[i].innerHTML += StartTrain;
+    else {
+      let infoBlock = Cells[i].querySelector(".info-block");
+      infoBlock.innerHTML = trainInfo;
+    }
   }
 };
 
-console.log(trainSchedule.length);
-console.log(Cells.length);
 test();

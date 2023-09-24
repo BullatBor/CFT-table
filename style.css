@@ -1,6 +1,70 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #aa96da;
+}
+
+.searchPanel {
+  background-color: rgb(255, 255, 255);
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.searchCount {
+  font-size: 22px;
+  padding: 5px 10px;
+}
+
+.searchPanel input {
+  padding: 10px 15px;
+  font-size: 22px;
+  margin: 0 10px;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  max-width: 300x;
+  width: 80%;
+  min-width: 50px;
+}
+
+.searchItem select {
+  padding: 10px 10px;
+  margin-right: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  max-width: 200;
+  width: 80%;
+  min-width: 50px;
+}
+
+.searchPanel button {
+  padding: 0 15px;
+  font-size: 19px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  max-width: 100x;
+  width: 80%;
+  min-width: 30px;
+}
+
+.searchPanel button:hover {
+  cursor: pointer;
+}
+
+.searchItem {
+  display: flex;
+  margin-right: 15px;
 }
 
 .container {
@@ -13,10 +77,13 @@ body {
 }
 
 .content {
+  position: relative;
   margin-top: 20px;
   max-width: 1600px;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .row-title {
@@ -36,27 +103,23 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: #e5eaf5;
   transition: 0.3s linear;
 }
 
+.element {
+  background-color: #feffd2;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.cell {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #c5f9d6;
+}
+
 .cell:hover {
-  background-color: #d0bdf4;
-}
-
-.cell:hover .route {
-  position: relative;
-  -webkit-animation: moving 5s infinite;
-  animation: moving 7s infinite;
-}
-
-@keyframes moving {
-  from {
-    transform: translateX(0px);
-  }
-  to {
-    transform: translateX(-80px);
-  }
+  background-color: #aa96da;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2) inset;
 }
 
 .row {
@@ -70,7 +133,102 @@ body {
   font-weight: 600;
 }
 
-.cell h2,
 .cell h3 {
   margin: 5px 0;
+}
+
+@media (min-width: 1000px) {
+  .cell:hover .route {
+    position: relative;
+    animation: moving 7s infinite;
+  }
+}
+
+@media (max-width: 420px) {
+  .cell .cell-title {
+    display: block;
+    font-family: Georgia, "Times New Roman", Times, serif;
+  }
+
+  .trainInfo {
+    flex: 1;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: 0.3s linear;
+  }
+
+  .cell {
+    border: 0;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+  .row-title {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 600px) {
+  .cell:hover .route {
+    animation-play-state: paused;
+  }
+  .cell:hover h3 {
+    position: relative;
+    animation: moving1000px 6s infinite;
+  }
+}
+
+@media (max-width: 600px) and (min-width: 421px) {
+  .cell:hover h3 {
+    animation-play-state: paused;
+  }
+  .cell:hover h3 {
+    position: relative;
+    animation: moving600px 5s infinite;
+  }
+  .element h1 {
+    position: relative;
+    animation: movingTitle 8s infinite;
+  }
+}
+
+@keyframes moving {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-150px);
+  }
+}
+
+@keyframes moving1000px {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-220px);
+  }
+}
+
+@keyframes moving600px {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-300px);
+  }
+}
+
+@keyframes movingTitle {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-90px);
+  }
 }
